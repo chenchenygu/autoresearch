@@ -446,7 +446,7 @@ WARMDOWN_RATIO = 0.5    # fraction of time budget for LR warmdown
 FINAL_LR_FRAC = 0.0     # final LR as fraction of initial
 
 # Model size
-DEPTH = 6               # smaller model for better token throughput on L40S
+DEPTH = 5               # test whether an even smaller stack is better at this 5-minute budget
 DEVICE_BATCH_SIZE = 128  # use freed memory to cut grad accumulation back to 2
 
 # ---------------------------------------------------------------------------
