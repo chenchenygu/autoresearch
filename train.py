@@ -446,8 +446,8 @@ WARMDOWN_RATIO = 0.5    # fraction of time budget for LR warmdown
 FINAL_LR_FRAC = 0.0     # final LR as fraction of initial
 
 # Model size
-DEPTH = 5               # current best frontier: 5-layer stack at 384 width
-DEVICE_BATCH_SIZE = 64   # keep grad accumulation at 1 while halving the per-step batch again
+DEPTH = 6               # revisit the 6-layer model under the improved small-batch regime
+DEVICE_BATCH_SIZE = 64  # keep grad accumulation at 1 in the reduced-batch setting
 
 # ---------------------------------------------------------------------------
 # Setup: tokenizer, model, optimizer, dataloader
