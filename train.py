@@ -446,7 +446,7 @@ WARMDOWN_RATIO = 0.5    # fraction of time budget for LR warmdown
 FINAL_LR_FRAC = 0.0     # final LR as fraction of initial
 
 # Model size
-DEPTH = 6               # revisit the 6-layer model under the improved small-batch regime
+DEPTH = 7               # test the next depth/capacity step under the kept small-batch regime
 DEVICE_BATCH_SIZE = 64  # keep grad accumulation at 1 in the reduced-batch setting
 
 # ---------------------------------------------------------------------------
