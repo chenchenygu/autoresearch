@@ -434,7 +434,7 @@ HEAD_DIM = 128          # target head dimension for attention
 WINDOW_PATTERN = "SSSL" # sliding window pattern: L=full, S=half context
 
 # Optimization
-TOTAL_BATCH_SIZE = 2**18 # test single-microbatch updates on the kept 5-layer model
+TOTAL_BATCH_SIZE = 2**17 # try even smaller single-step batches for more updates in 5 minutes
 EMBEDDING_LR = 0.6      # learning rate for token embeddings (Adam)
 UNEMBEDDING_LR = 0.004  # learning rate for lm_head (Adam)
 MATRIX_LR = 0.04        # learning rate for matrix parameters (Muon)
@@ -446,8 +446,8 @@ WARMDOWN_RATIO = 0.5    # fraction of time budget for LR warmdown
 FINAL_LR_FRAC = 0.0     # final LR as fraction of initial
 
 # Model size
-DEPTH = 5               # test whether an even smaller stack is better at this 5-minute budget
-DEVICE_BATCH_SIZE = 128  # use freed memory to cut grad accumulation back to 2
+DEPTH = 5               # current best frontier: 5-layer stack at 384 width
+DEVICE_BATCH_SIZE = 64   # keep grad accumulation at 1 while halving the per-step batch again
 
 # ---------------------------------------------------------------------------
 # Setup: tokenizer, model, optimizer, dataloader
