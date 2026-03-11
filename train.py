@@ -431,7 +431,7 @@ class MuonAdamW(torch.optim.Optimizer):
 # Model architecture
 ASPECT_RATIO = 64       # model_dim = depth * ASPECT_RATIO
 HEAD_DIM = 128          # target head dimension for attention
-WINDOW_PATTERN = "LSLS" # long attention first, alternating with short
+WINDOW_PATTERN = "SSLL" # try a middle ground between the kept SSSL pattern and full attention
 
 # Optimization
 TOTAL_BATCH_SIZE = 2**17 # try even smaller single-step batches for more updates in 5 minutes
