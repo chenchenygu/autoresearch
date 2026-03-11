@@ -560,9 +560,6 @@ while True:
         if group['kind'] == 'muon':
             group["momentum"] = muon_momentum
             group["weight_decay"] = muon_weight_decay
-    # Keep embedding LR constant (no warmdown)
-    optimizer.param_groups[1]["lr"] = optimizer.param_groups[1]["initial_lr"]
-    optimizer.param_groups[2]["lr"] = optimizer.param_groups[2]["initial_lr"]
     optimizer.step()
     model.zero_grad(set_to_none=True)
 
