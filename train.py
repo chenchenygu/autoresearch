@@ -443,7 +443,7 @@ WEIGHT_DECAY = 0.2      # cautious weight decay for Muon
 ADAM_BETAS = (0.8, 0.95) # Adam beta1, beta2
 WARMUP_RATIO = 0.0      # fraction of time budget for LR warmup
 WARMDOWN_RATIO = 0.7    # fraction of time budget for LR warmdown
-FINAL_LR_FRAC = 0.04    # keep small LR floor instead of decaying to 0
+FINAL_LR_FRAC = 0.05    # keep small LR floor instead of decaying to 0
 
 # Model size
 DEPTH = 7               # test the next depth/capacity step under the kept small-batch regime
