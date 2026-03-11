@@ -50,15 +50,11 @@ def has_ve(layer_idx, n_layer):
 
 def apply_rotary_emb(x, cos, sin):
     assert x.ndim == 4
-    head_dim = x.shape[3]
-    rope_dim = head_dim // 2  # apply RoPE to first half only
-    x_rope = x[..., :rope_dim]
-    x_pass = x[..., rope_dim:]
-    d = rope_dim // 2
-    x1, x2 = x_rope[..., :d], x_rope[..., d:]
+    d = x.shape[3] // 2
+    x1, x2 = x[..., :d], x[..., d:]
     y1 = x1 * cos + x2 * sin
     y2 = x1 * (-sin) + x2 * cos
-    return torch.cat([y1, y2, x_pass], 3)
+    return torch.cat([y1, y2], 3)
 
 
 class CausalSelfAttention(nn.Module):
@@ -186,9 +182,8 @@ class GPT(nn.Module):
     def _precompute_rotary_embeddings(self, seq_len, head_dim, base=10000, device=None):
         if device is None:
             device = self.transformer.wte.weight.device
-        rope_dim = head_dim // 2  # partial rotary: only first half
-        channel_range = torch.arange(0, rope_dim, 2, dtype=torch.float32, device=device)
-        inv_freq = 1.0 / (base ** (channel_range / rope_dim))
+        channel_range = torch.arange(0, head_dim, 2, dtype=torch.float32, device=device)
+        inv_freq = 1.0 / (base ** (channel_range / head_dim))
         t = torch.arange(seq_len, dtype=torch.float32, device=device)
         freqs = torch.outer(t, inv_freq)
         cos, sin = freqs.cos(), freqs.sin()
