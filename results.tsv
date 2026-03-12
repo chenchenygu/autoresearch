@@ -1,0 +1,171 @@
+commit	val_bpb	memory_gb	status	description
+c269320	0.000000	0.0	crash	baseline on L40S OOM during first forward pass
+b0b7f66	1.120903	22.3	keep	halve DEVICE_BATCH_SIZE to 64 to fit L40S
+4f06c5f	1.123274	22.3	discard	halve TOTAL_BATCH_SIZE to 2**18 for more update steps
+d01cfc8	1.124200	22.3	discard	shorten WARMDOWN_RATIO to 0.25
+7c49571	1.110150	26.5	keep	shrink to 6 layers and restore DEVICE_BATCH_SIZE to 128
+ce9ab0c	1.114327	26.6	discard	use 64-dim heads for 6 attention heads at 384 width
+97710e5	1.098137	22.9	keep	shrink further to 5 layers at 384 width for more tokens
+0984cd9	1.100324	19.1	discard	shrink to 4 layers while holding 384 width constant
+350fdbd	0.000000	0.0	crash	try DEVICE_BATCH_SIZE=256 on the 5-layer model (OOM)
+bc44d77	1.122514	29.3	discard	widen 5-layer model to 512 dims
+ff74041	1.114667	22.3	discard	remove value embeddings for a simpler faster 5-layer model
+7416c19	1.073765	22.9	keep	halve TOTAL_BATCH_SIZE to 2**18 for single-microbatch updates on the 5-layer model
+6b1dacf	1.072027	11.5	keep	halve TOTAL_BATCH_SIZE to 2**17 with DEVICE_BATCH_SIZE 64 on the 5-layer model
+32807d7	1.077580	5.9	discard	halve TOTAL_BATCH_SIZE to 2**16 with DEVICE_BATCH_SIZE 32 on the 5-layer model
+9a8b7b1	1.066852	13.3	keep	restore the 6-layer 384-wide model under the 2**17 small-batch regime
+453c5b5	1.056025	19.7	keep	step up to the 7-layer 512-wide model under the 2**17 small-batch regime
+c8c0a20	1.060991	22.1	discard	add an eighth layer to the 512-wide small-batch frontier
+b8ab1ea	1.057647	19.7	discard	switch 7-layer small-batch model to full attention
+dbc33a2	1.063869	24.2	discard	widen 7-layer model from 512 to 640 dims (ASPECT_RATIO=80)
+97b7608	1.061176	19.7	discard	increase Muon LR from 0.04 to 0.06 on 7-layer model
+cdade55	1.058516	19.7	discard	increase embedding LR from 0.6 to 1.0 on 7-layer model
+c6274ac	1.055033	19.7	keep	increase warmdown ratio from 0.5 to 0.7 on 7-layer model
+3944f05	1.055403	19.7	discard	push warmdown ratio to 0.8
+b77aade	1.055618	19.7	discard	set FINAL_LR_FRAC to 0.1
+ab1274f	1.070047	19.9	discard	switch MLP from ReLU-squared to SwiGLU
+0a5becf	1.058624	19.7	discard	add 2% warmup ratio
+0617118	1.055420	19.7	discard	reduce weight decay from 0.2 to 0.1
+61f7d3c	1.058919	19.7	discard	increase logit softcap from 15 to 30
+7974a85	1.058672	19.7	discard	increase Adam beta1 from 0.8 to 0.9
+b24261d	1.053775	17.9	keep	reduce MLP expansion ratio from 4x to 3x
+e4b7379	1.058025	20.1	discard	add an eighth layer to the leaner 3x-MLP frontier
+3c31d52	1.055235	17.9	discard	switch the 3x-MLP frontier to full attention
+64ef98d	1.057367	16.1	discard	reduce MLP expansion ratio from 3x to 2x
+4eb0a48	1.052908	17.9	keep	try a denser SSLL attention pattern on the 3x-MLP frontier
+a40af75	1.058934	20.1	discard	auto DEPTH=8
+885f992	1.062845	18.0	discard	try HEAD_DIM=64 with 8 heads at same 512 width
+1763072	1.062498	16.3	discard	try GQA with half KV heads (2 instead of 4)
+2f85a03	1.053807	17.9	discard	shrink short window from T//2 to T//4 (512 tokens)
+08c0bc5	1.066228	16.2	discard	parallel attention+MLP (PaLM-style)
+fa4e29c	1.057988	17.9	discard	cosine warmdown schedule instead of linear
+8ad29f5	1.055060	17.9	discard	SLSL alternating attention pattern
+5f346dd	1.062380	17.9	discard	reduce Muon Newton-Schulz steps from 5 to 3
+6e400fb	1.054494	17.9	discard	reduce logit softcap from 15 to 10
+8083788	1.057512	17.9	discard	increase RoPE base frequency from 10000 to 100000
+276f563	1.386087	21.9	discard	label smoothing 0.1 on cross-entropy loss
+7a9db45	1.061103	17.9	discard	remove logit softcap entirely
+33ccb94	1.057137	18.4	discard	value embeddings on all layers instead of alternating
+27c5f43	1.058585	17.9	discard	increase final Muon momentum from 0.95 to 0.98
+050542f	1.057886	17.9	discard	constant weight decay instead of linearly decaying
+bf6bca1	1.057695	17.9	discard	increase lm_head init scale from 0.001 to 0.01
+52a2760	1.054920	17.9	discard	increase Muon beta2 from 0.95 to 0.99
+96c61f6	1.071348	16.2	discard	remove QK-norm to save compute per step
+94c7de9	1.054720	17.9	discard	increase VE gate channels from 32 to 64
+af653b9	1.053324	17.9	discard	softcap=12 (between 10 and 15)
+d0c1960	1.068455	17.9	discard	gated ReluSquared MLP with 2x hidden dim
+99c96f2	1.064267	20.5	discard	per-channel residual gates instead of per-layer scalars
+948ec72	1.065544	17.2	discard	remove x0 skip connection (keep resid_lambdas only)
+b456f58	1.052825	20.0	keep	torch.compile with max-autotune mode
+1f12601	1.057539	20.1	discard	revisit DEPTH=8 with max-autotune compile
+c20f1f8	1.054592	17.9	discard	increase Muon LR from 0.04 to 0.05
+93ba556	1.054217	17.9	discard	all-long attention with max-autotune
+e1f4b08	1.055727	10.1	discard	halve batch to 2**16 with DEVICE_BATCH_SIZE=32
+f6953c4	1.053421	17.9	discard	increase embedding LR from 0.6 to 0.8
+490b1ee	1.052988	17.9	discard	decrease embedding LR from 0.6 to 0.4
+4caf0b7	1.053808	17.9	discard	warmdown ratio 0.6
+799a65f	1.053990	17.9	discard	lower initial Muon momentum from 0.85 to 0.70
+b4cbd38	1.056147	17.9	discard	double unembedding LR from 0.004 to 0.008
+1259d72	1.052497	17.9	keep	reduce x0_lambda init from 0.1 to 0.05
+f8eda82	1.052889	17.9	discard	further reduce x0_lambda init from 0.05 to 0.02
+1734bc9	1.061689	17.9	discard	x0_lambda init 0.07 (between 0.05 and 0.1)
+2fba7e5	1.064712	17.4	discard	plain ReLU instead of ReluSquared in MLP
+a936e60	1.052704	17.9	discard	reduce Muon LR from 0.04 to 0.035
+8be99a7	1.053104	17.9	discard	increase scalar LR from 0.5 to 1.0
+d256537	1.053513	17.9	discard	add weight decay 0.01 to embedding tables
+51df430	1.053117	17.9	discard	SLLLL attention pattern (2S + 5L layers)
+b87c47b	1.055121	17.9	discard	tanh VE gate (start at 0) instead of 2*sigmoid
+13e6df5	1.054430	17.9	discard	increasing weight decay over training (0 to 0.2)
+a8a67bc	1.056773	17.9	discard	different random seed (0 instead of 42)
+94cf93b	1.052085	17.9	keep	max-autotune-no-cudagraphs compile mode
+b84bd38	1.054644	17.9	discard	increase weight decay from 0.2 to 0.3
+a1e0c16	1.053959	20.0	discard	3.5x MLP expansion ratio (1792 hidden)
+0ab4559	1.056485	17.9	discard	Z-loss regularizer (1e-4) on logit magnitudes
+05a3aa3	1.051309	17.9	keep	set FINAL_LR_FRAC=0.05 (keep small LR floor)
+0301718	1.053236	17.9	discard	FINAL_LR_FRAC=0.1
+517125a	1.052077	17.9	discard	FINAL_LR_FRAC=0.03
+c655b89	1.052225	17.9	discard	FINAL_LR_FRAC=0.07
+6fc7dbe	1.051843	17.9	discard	warmdown ratio 0.75 with LR floor
+b0e7f96	1.052182	17.9	discard	increase Adam beta2 from 0.95 to 0.99
+282e3d3	1.053319	17.9	discard	Muon LR 0.045 with LR floor
+5f4d301	1.055697	17.6	discard	VE only on first and last layers (2 instead of 4)
+fd22702	1.057526	17.9	discard	standard weight decay instead of cautious in Muon
+1cfa200	1.052088	17.4	discard	remove VE gate (use fixed VE scale 1.0)
+177ab28	1.051558	17.9	discard	Muon LR 0.03
+0f26018	1.056728	17.9	discard	tiny 0.5% warmup ratio
+b882554	1.051934	17.9	discard	slower Muon momentum warmup (500 steps instead of 300)
+8556296	1.052949	17.9	discard	reduce Muon Newton-Schulz steps from 5 to 4
+d98fcd8	1.051910	18.0	discard	reduce VE gate channels from 32 to 16
+fd1af8a	1.055626	17.9	discard	orthogonal init for QKV and MLP fc weights
+ea50c55	1.053080	17.2	discard	remove initial embedding norm
+9b7a1da	1.057397	17.5	discard	share single VE embedding across all VE layers
+a426958	1.050925	17.9	keep	enable fullgraph=True in torch.compile
+7b427e7	1.054453	17.9	discard	tie weight decay schedule to LR multiplier
+c8d71d7	1.167273	18.1	discard	EMA weights for eval (decay=0.999 too slow - initial weights dominate)
+ea1c44b	1.052936	20.0	discard	fixed Muon momentum 0.95 (no warmup ramp)
+712850e	1.049857	17.9	keep	x0_lambda init 0.04
+5b32884	1.053576	17.9	discard	x0_lambda init 0.03
+e8a142c	1.056420	17.9	discard	x0_lambda init 0.045
+9d99be2	1.050786	17.9	discard	resid_lambda init 0.9
+ac91723	1.050812	17.9	discard	inductor coordinate descent tuning
+59699f3	1.051526	17.9	discard	increase short window from T//2 to T*3//4
+9249c6f	1.051093	17.9	discard	WEIGHT_DECAY=0.25
+01366b9	1.050159	17.9	discard	softcap=14
+7bc54ad	1.054507	17.9	discard	non-zero MLP proj init std=0.001
+2ded311	1.049835	17.9	keep	Muon beta2=0.90 (from 0.95)
+5259ae8	1.050441	17.9	discard	Muon beta2=0.85
+3ad250d	1.050372	17.9	discard	EMBEDDING_LR=0.5
+a1d6936	1.051198	17.9	discard	x0_lambda Adam betas (0.8,0.95)
+30631ad	1.052213	17.9	discard	UNEMBEDDING_LR=0.003
+78045d2	1.050883	17.9	discard	faster Muon momentum warmup (200 steps)
+cc1736c	1.050426	18.0	discard	VE gate channels 48
+d0ec85c	1.051118	17.9	discard	EMBEDDING_LR=0.7
+d8a0522	1.052371	17.9	discard	UNEMBEDDING_LR=0.005
+6eb9b6e	1.080943	17.9	discard	post-block RMS norm
+b1c3cf5	1.050940	17.9	discard	SCALAR_LR=0.3
+7460639	1.051920	17.9	discard	Adam beta1=0.85
+112bc1e	1.052362	17.9	discard	50-step Muon LR warmup
+e5d31a5	1.052475	17.9	discard	slower WD decay (1-progress^2)
+08c9bf0	1.053803	17.8	discard	VE on layers 2,4,6 only (skip layer 0)
+1bd5957	1.050477	17.9	discard	RoPE base=8000
+b54d1fb	1.051649	17.9	discard	Adam beta2=0.90
+81de804	1.050546	17.9	discard	Muon initial momentum 0.90
+a0e25de	1.051096	17.9	discard	WARMDOWN_RATIO=0.65
+1acc93f	1.049991	17.9	discard	FINAL_LR_FRAC=0.04
+c849ec5	1.050591	17.9	discard	softcap=13
+f05f375	1.056248	17.9	discard	resid_lambda init 0.95
+d399bcf	1.050371	17.9	discard	gradient clipping max_norm=1.0
+efeefa4	1.050465	17.9	discard	Muon final momentum 0.96
+cb936d3	1.050284	17.9	discard	x0_lambda Adam beta2=0.99
+8b655f8	1.053303	17.9	discard	quadratic warmdown schedule
+4894832	1.050792	17.9	discard	resid_lambda LR 0.001 (from 0.005)
+991d946	1.050156	17.9	discard	2x VE embedding init scale
+dd74167	1.051850	17.9	discard	2x V projection init scale
+5e9ea62	0.000000	0.0	crash	weight tying (assertion error)
+42e90cc	1.065298	18.9	discard	GELU activation in MLP
+1390456	1.092724	21.9	discard	label smoothing 0.01
+6d86d3b	1.052766	17.9	discard	reduce-overhead compile mode
+e3b5003	1.050163	17.9	discard	remove Muon aspect-ratio LR scaling
+82ccb36	1.051509	17.9	discard	VE embedding LR 0.3 (half of main)
+6dd677a	1.054916	17.9	discard	normal init for QKV/MLP weights
+73796a2	1.055974	17.9	discard	increase attention softmax_scale
+ed43c07	1.050783	17.9	discard	LSLS attention pattern
+7ff3bab	1.050741	17.9	discard	combine softcap=14 + 2x VE init
+db4d46b	1.053461	17.9	discard	constant embedding+VE LR (no warmdown)
+e480301	1.057453	17.9	discard	decreasing x0_lambda init with depth
+929cb2c	1.050920	19.6	discard	4x MLP expansion in last layer only
+5ea49c0	1.051685	17.9	discard	x0_lambda LR 0.3 (from 0.5)
+9be3c0b	1.057735	17.9	discard	partial rotary embeddings (half head_dim)
+e366b19	1.054482	18.0	discard	EMA eval decay=0.99
+756fba8	1.050926	17.9	discard	Muon momentum warmup 100 steps
+9f918b5	1.049733	17.9	keep	x0_lambda Adam beta1=0.90
+3a02374	1.050158	17.9	discard	x0_lambda Adam beta1=0.85
+bc5b40d	1.051245	17.9	discard	x0_lambda Adam beta1=0.93
+73060c7	1.051667	17.9	discard	resid_lambda Adam betas (0.90,0.95)
+7ba5576	1.050938	17.9	discard	x0_lambda Adam betas (0.90, 0.90)
+a07b4ef	1.053613	17.9	discard	Adam beta1=0.9 for embeddings (from 0.8)
+3e250d3	1.050662	17.9	discard	x0_lambda LR 0.7
+5caab50	1.049738	17.9	discard	softcap=14 (with x0 beta1=0.90)
+db34360	1.051204	17.9	discard	Muon beta2=0.85 (re-test)
+81677f3	1.053764	17.9	discard	lm_head Adam beta1=0.9
+ebd18fd	1.053091	17.9	discard	x0_lambda init 0.05 (re-test)
