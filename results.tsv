@@ -10,3 +10,5 @@ e64aeab	1.043330	22.1	keep	halve TOTAL_BATCH_SIZE to 2**17 with DEVICE_BATCH_SIZ
 f38afca	1.045503	27.5	discard	increase DEPTH to 9 (from 8)
 0e53932	1.043231	25.2	keep	widen model to ASPECT_RATIO=80 (model_dim=640)
 274a579	1.049468	31.2	discard	widen model to ASPECT_RATIO=96 (model_dim=768)
+2a9a58f	1.043094	24.7	keep	WARMDOWN_RATIO=0.75 (from 0.7)
+4aeab9d	1.043229	24.7	discard	WARMDOWN_RATIO=0.8
