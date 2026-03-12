@@ -4,17 +4,16 @@ This is an experiment to have the LLM do its own research.
 
 ## Setup
 
-To set up a new experiment, work with the user to:
+To continue the experiment from wherever it last stopped, work with the user to:
 
-1. **Agree on a run tag**: propose a tag based on today's date (e.g. `mar5`). The branch `autoresearch/<tag>` must not already exist — this is a fresh run.
-2. **Create the branch**: `git checkout -b autoresearch/<tag>` from current master.
-3. **Read the in-scope files**: The repo is small. Read these files for full context:
+1. **Stay on the existing autoresearch branch**: If the current branch is already `autoresearch/<tag>`, keep using it. Do not start a fresh branch just because the date changed. Only create a new `autoresearch/<tag>` branch if there is no existing experiment branch to continue.
+2. **Read the in-scope files**: The repo is small. Read these files for full context:
    - `README.md` — repository context.
    - `prepare.py` — fixed constants, data prep, tokenizer, dataloader, evaluation. Do not modify.
    - `train.py` — the file you modify. Model architecture, optimizer, training loop.
-4. **Verify data exists**: Check that `~/.cache/autoresearch/` contains data shards and a tokenizer. If not, tell the human to run `uv run prepare.py`.
-5. **Initialize results.tsv**: Create `results.tsv` with just the header row. The baseline will be recorded after the first run.
-6. **Confirm and go**: Confirm setup looks good.
+3. **Verify data exists**: Check that `~/.cache/autoresearch/` contains data shards and a tokenizer. If not, tell the human to run `uv run prepare.py`.
+4. **Reuse results.tsv if it exists**: If `results.tsv` is already present, keep appending to it. If it does not exist yet, create it with just the header row.
+5. **Confirm and go**: Confirm setup looks good and continue from the current branch state/results log.
 
 Once you get confirmation, kick off the experimentation.
 
@@ -36,7 +35,7 @@ Each experiment runs on a single GPU. The training script runs for a **fixed tim
 
 **Simplicity criterion**: All else being equal, simpler is better. A small improvement that adds ugly complexity is not worth it. Conversely, removing something and getting equal or better results is a great outcome — that's a simplification win. When evaluating whether to keep a change, weigh the complexity cost against the improvement magnitude. A 0.001 val_bpb improvement that adds 20 lines of hacky code? Probably not worth it. A 0.001 val_bpb improvement from deleting code? Definitely keep. An improvement of ~0 but much simpler code? Keep.
 
-**The first run**: Your very first run should always be to establish the baseline, so you will run the training script as is.
+**The first run of a fresh branch**: If there is no prior `results.tsv` history for this branch, your first run should establish the baseline by running the training script as is. If the branch already has prior results, continue from the latest kept state instead of re-running a fresh baseline.
 
 ## Output format
 
@@ -89,19 +88,19 @@ d4e5f6g	0.000000	0.0	crash	double model width (OOM)
 
 ## The experiment loop
 
-The experiment runs on a dedicated branch (e.g. `autoresearch/mar5` or `autoresearch/mar5-gpu0`).
+The experiment runs on a dedicated branch (e.g. `autoresearch/mar5` or `autoresearch/mar5-gpu0`), and future sessions should resume on that same branch rather than starting over.
 
 LOOP FOREVER:
 
-1. Look at the git state: the current branch/commit we're on
+1. Look at the git state: confirm the current `autoresearch/*` branch/commit and, if present, inspect `results.tsv` so you know what state you're resuming from
 2. Tune `train.py` with an experimental idea by directly hacking the code.
 3. git commit
 4. Run the experiment: `uv run train.py > run.log 2>&1` (redirect everything — do NOT use tee or let output flood your context)
 5. Read out the results: `grep "^val_bpb:\|^peak_vram_mb:" run.log`
 6. If the grep output is empty, the run crashed. Run `tail -n 50 run.log` to read the Python stack trace and attempt a fix. If you can't get things to work after more than a few attempts, give up.
-7. Record the results in the tsv (NOTE: do not commit the results.tsv file, leave it untracked by git)
+7. Record the results in the tsv and commit `results.tsv` alongside experiment commits
 8. If val_bpb improved (lower), you "advance" the branch, keeping the git commit
-9. If val_bpb is equal or worse, you git reset back to where you started
+9. If val_bpb is equal or worse, you git reset back to the commit where this particular experiment iteration started
 
 The idea is that you are a completely autonomous researcher trying things out. If they work, keep. If they don't, discard. And you're advancing the branch so that you can iterate. If you feel like you're getting stuck in some way, you can rewind but you should probably do this very very sparingly (if ever).
 
