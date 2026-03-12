@@ -1,1 +1,5 @@
 commit	val_bpb	memory_gb	status	description
+c38e7a9	1.173870	44.0	keep	baseline: default config (DEPTH=8, DEVICE_BATCH_SIZE=128, TOTAL_BATCH_SIZE=2**19)
+d7b14b2	1.145108	48.4	keep	proven hyperparams: warmdown=0.7 LR_floor=0.05 compile_fullgraph x0_lambda=0.04/beta1=0.90 Muon_beta2=0.90
+a1ce933	1.105250	41.9	keep	3x MLP expansion ratio (from 4x)
+957af26	1.126641	39.9	discard	SSLL attention pattern (from SSSL)
