@@ -1,20 +1,26 @@
 commit	val_bpb	memory_gb	status	description
 c38e7a9	1.173870	44.0	keep	baseline: default config (DEPTH=8, DEVICE_BATCH_SIZE=128, TOTAL_BATCH_SIZE=2**19)
-d7b14b2	1.145108	48.4	keep	proven hyperparams: warmdown=0.7 LR_floor=0.05 compile_fullgraph x0_lambda=0.04/beta1=0.90 Muon_beta2=0.90
+d7b14b2	1.145108	48.4	keep	proven hyperparams
 a1ce933	1.105250	41.9	keep	3x MLP expansion ratio (from 4x)
 957af26	1.126641	39.9	discard	SSLL attention pattern (from SSSL)
-72b52e5	1.049943	39.8	keep	halve TOTAL_BATCH_SIZE to 2**18 for more update steps
+72b52e5	1.049943	39.8	keep	halve TOTAL_BATCH_SIZE to 2**18
 e64aeab	1.043330	22.1	keep	halve TOTAL_BATCH_SIZE to 2**17 with DEVICE_BATCH_SIZE=64
-935f098	1.048647	11.2	discard	halve TOTAL_BATCH_SIZE to 2**16 with DEVICE_BATCH_SIZE=32
-55215de	1.050488	32.1	discard	increase DEPTH to 10 (from 8)
-f38afca	1.045503	27.5	discard	increase DEPTH to 9 (from 8)
-0e53932	1.043231	25.2	keep	widen model to ASPECT_RATIO=80 (model_dim=640)
-274a579	1.049468	31.2	discard	widen model to ASPECT_RATIO=96 (model_dim=768)
-2a9a58f	1.043094	24.7	keep	WARMDOWN_RATIO=0.75 (from 0.7)
+935f098	1.048647	11.2	discard	halve to 2**16
+55215de	1.050488	32.1	discard	DEPTH=10
+f38afca	1.045503	27.5	discard	DEPTH=9
+0e53932	1.043231	25.2	keep	ASPECT_RATIO=80 (model_dim=640)
+274a579	1.049468	31.2	discard	ASPECT_RATIO=96 (model_dim=768)
+2a9a58f	1.043094	24.7	keep	WARMDOWN_RATIO=0.75
 4aeab9d	1.043229	24.7	discard	WARMDOWN_RATIO=0.8
-a8c8990	1.042104	22.0	keep	reduce DEPTH from 8 to 7 at 640 width
-ac74fc7	1.045412	15.6	discard	reduce DEPTH from 7 to 6 at 640 width
-90c490d	1.048132	26.0	discard	widen DEPTH=7 model to 768 dims
-23d9ad4	1.041600	22.0	keep	SSLL attention pattern on DEPTH=7 model
-322d249	1.041960	22.0	discard	Muon LR=0.05 (from 0.04)
-7eaa204	1.040264	22.0	keep	Muon LR=0.035 (from 0.04)
+a8c8990	1.042104	22.0	keep	DEPTH=7 at 640 width
+ac74fc7	1.045412	15.6	discard	DEPTH=6 at 640 width
+90c490d	1.048132	26.0	discard	DEPTH=7 at 768 width
+23d9ad4	1.041600	22.0	keep	SSLL attention pattern on DEPTH=7
+322d249	1.041960	22.0	discard	Muon LR=0.05
+7eaa204	1.040264	22.0	keep	Muon LR=0.035
+c6c2212	1.038916	22.0	keep	Muon LR=0.03
+5f151c9	1.040383	22.0	discard	Muon LR=0.025
+6624acb	1.040768	22.0	discard	WEIGHT_DECAY=0.15
+29b7e8b	1.040605	22.0	discard	EMBEDDING_LR=0.5
+f0ab93f	1.040083	22.0	discard	EMBEDDING_LR=0.8
+2991057	1.039994	22.0	discard	softcap=14
