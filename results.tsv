@@ -15,3 +15,5 @@ f38afca	1.045503	27.5	discard	increase DEPTH to 9 (from 8)
 a8c8990	1.042104	22.0	keep	reduce DEPTH from 8 to 7 at 640 width
 ac74fc7	1.045412	15.6	discard	reduce DEPTH from 7 to 6 at 640 width
 90c490d	1.048132	26.0	discard	widen DEPTH=7 model to 768 dims
+23d9ad4	1.041600	22.0	keep	SSLL attention pattern on DEPTH=7 model
+322d249	1.041960	22.0	discard	Muon LR=0.05 (from 0.04)
