@@ -4,3 +4,7 @@ d7b14b2	1.145108	48.4	keep	proven hyperparams: warmdown=0.7 LR_floor=0.05 compil
 a1ce933	1.105250	41.9	keep	3x MLP expansion ratio (from 4x)
 957af26	1.126641	39.9	discard	SSLL attention pattern (from SSSL)
 72b52e5	1.049943	39.8	keep	halve TOTAL_BATCH_SIZE to 2**18 for more update steps
+e64aeab	1.043330	22.1	keep	halve TOTAL_BATCH_SIZE to 2**17 with DEVICE_BATCH_SIZE=64
+935f098	1.048647	11.2	discard	halve TOTAL_BATCH_SIZE to 2**16 with DEVICE_BATCH_SIZE=32
+55215de	1.050488	32.1	discard	increase DEPTH to 10 (from 8)
+f38afca	1.045503	27.5	discard	increase DEPTH to 9 (from 8)
