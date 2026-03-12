@@ -24,3 +24,39 @@ c6c2212	1.038916	22.0	keep	Muon LR=0.03
 29b7e8b	1.040605	22.0	discard	EMBEDDING_LR=0.5
 f0ab93f	1.040083	22.0	discard	EMBEDDING_LR=0.8
 2991057	1.039994	22.0	discard	softcap=14
+8034bba	1.038456	22.0	discard	EMB_LR=0.7
+3a7ef21	1.038852	22.0	discard	Muon beta2=0.85
+0c5ffe1	1.043940	22.0	discard	x0_lambda=0.05
+2f1658c	1.038564	22.0	discard	warmdown=0.8 retest
+c02c527	1.038381	22.0	discard	warmdown=0.7 retest
+a55c489	1.043033	22.0	discard	wider short window T*3//4
+ab66d0a	1.042224	22.0	discard	cosine warmdown schedule
+124798d	1.038517	22.0	discard	UNEMBEDDING_LR=0.006
+4d72246	1.052413	22.0	discard	HEAD_DIM=64 (10 heads at 640)
+ffa8af4	1.043480	22.0	discard	softcap=30
+adc0b24	1.039040	22.0	discard	WEIGHT_DECAY=0.25
+4a5a097	1.043301	22.1	discard	VE first+last only
+544b5f0	1.040866	22.0	discard	constant weight decay
+e205c66	1.042498	23.1	discard	VE every layer
+04f3021	1.039198	22.0	discard	x0_lambda=0.03
+d51ebb1	1.040825	22.0	discard	z-loss regularization
+0ea4442	1.040403	22.0	discard	faster Muon momentum warmup
+92b2c7f	1.039857	21.5	discard	remove resid_lambdas
+d957600	1.042050	22.0	discard	Muon ns_steps=4
+a9d022c	1.041881	22.0	discard	RoPE base=5000
+6a2adf9	1.040153	22.0	discard	RoPE base=50000
+2fe7cad	1.051385	23.7	discard	GeLU activation
+1333992	1.040962	22.0	discard	Adam beta1=0.9
+5b1fff3	1.039284	22.0	discard	FINAL_LR_FRAC=0.01
+16dd270	1.038866	22.0	discard	Muon LR=0.032
+df73637	1.038323	22.0	discard	Muon LR=0.028
+41f33e6	1.043772	22.7	discard	EMA adaptive decay
+c8b051e	1.043977	22.0	discard	WARMUP_RATIO=0.02
+a9ef051	1.048390	20.2	discard	remove QK norm
+9539816	1.039088	22.0	discard	FINAL_LR_FRAC=0.02
+7ff4b6b	1.038633	22.0	discard	SCALAR_LR=1.0
+cec574f	1.038391	22.0	discard	EMB_LR=0.65
+5aac2fe	1.038407	22.0	discard	Muon beta2=0.92
+f4400e8	1.038516	22.0	discard	ve_gate_channels=64 (from 32)
+942032a	1.044681	24.7	discard	DEPTH=8 retest with current hyperparams
+91d55e9	1.050408	23.3	discard	gated MLP (ReluSquared GLU) 2x expansion
